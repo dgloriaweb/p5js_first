@@ -7,15 +7,13 @@ var velocity
 var acceleration
 
 function preload() {
-  img = loadImage(
-    'https://thumbs.dreamstime.com/b/mobility-scooter-icon-vector-supermarket-concept-thin-line-illustration-editable-stroke-linear-sign-use-web-192174043.jpg'
-  )
+  img = loadImage('../scooter.png')
 }
 function setup() {
-  position = createVector(180, 150)
+  position = createVector(500, 500)
   velocity = createVector(0.5)
   acceleration = createVector(0.1, 0)
-  createCanvas(400, 200)
+  createCanvas(1000, 600)
   scooter = new Scooter(position.x, position.y, img)
   timer = 5000
 }
@@ -25,6 +23,8 @@ function draw() {
   update()
   imageMode(CENTER)
   image(this.img, position.x, position.y, 100, 100)
+  ellipse(50,height-50,20,20)
+  ellipse(width-50,height-50,20,20)
 }
 function touchEnded() {
   isLeftPressed = false
@@ -37,7 +37,7 @@ function touchStarted(event) {
   if (event.clientX > 25 && event.clientX < 75) {
     isLeftPressed = true
   }
-  if (event.clientX > 325 && event.clientX < 375) {
+  if (event.clientX > width-75 && event.clientX < width-25) {
     isRightPressed = true
   }
 }
