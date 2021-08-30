@@ -39,25 +39,17 @@ function touchEnded() {
   console.log('ended')
 }
 function touchStarted(event) {
-  if (event.clientX > 25 && event.clientX < 75) {
-    isLeftPressed = true
+  touchX = getTouchEventX(event)
+  if (touchX > 25 && touchX < 75) {
+    isLeftPressed = true;
+    console.log("left");
   }
-  if (
-    event.clientX > width - 75 &&
-    event.clientX < width - 25 &&
-    event.clientY > height - 80
-  ) {
-    isRightPressed = true
-  }
-  if (event.clientY < height - 80) {
-    //jump
-
-    console.log('jump')
-    scooter.jump()
+  if (touchX > width - 75 && touchX < width - 25) {
+    isRightPressed = true;
   }
 }
 
-function getPositionX(event) {
+function getTouchEventX(event) {
   return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX
 }
 // function createGem() {
