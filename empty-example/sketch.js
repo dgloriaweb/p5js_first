@@ -1,8 +1,10 @@
 var cursorX = 50
 var isLeftPressed = false
 var isRightPressed = false
+var mass = 2
 var position
 var velocity
+var acceleration
 
 function preload() {
   img = loadImage(
@@ -11,7 +13,8 @@ function preload() {
 }
 function setup() {
   position = createVector(180, 150)
-  velocity = createVector(4)
+  velocity = createVector(0.5)
+  acceleration = createVector(0.1, 0)
   createCanvas(400, 200)
   scooter = new Scooter(position.x, position.y, img)
   timer = 5000
@@ -26,6 +29,8 @@ function draw() {
 function touchEnded() {
   isLeftPressed = false
   isRightPressed = false
+  velocity = createVector(0.5)
+  acceleration = createVector(0.3, 0)
   console.log('ended')
 }
 function touchStarted(event) {
@@ -45,16 +50,19 @@ function getPositionX(event) {
 // }
 
 function update() {
-  let friction = -2
-  
   if (isLeftPressed) {
+    //if reached edge, stop
+    if (position.x < 100) {
+      this.isLeftPressed = false
+    }
+    velocity.add(acceleration)
     position.sub(velocity)
-    position.sub(friction)
-    console.log(velocity.x)
   }
   if (isRightPressed) {
-    position.add(-1*velocity)
-    position.add(-1*friction)
-    console.log(velocity.x)
+    if (position.x > width-100) {
+      this.isRightPressed = false
+    }
+    velocity.add(acceleration)
+    position.add(velocity)
   }
 }
