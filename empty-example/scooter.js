@@ -1,22 +1,34 @@
 function Scooter(x, y, img) {
-  this.imageX = x
-  this.imageY = y
+  this.pos = createVector(x, y)
+  this.vel = createVector()
+  this.grav = 0.1
+
   this.img = img
 
   this.display = function () {
     imageMode(CENTER)
-    image(this.img, this.imageX, this.imageY, 100, 100)
+    image(this.img, this.pos.x, this.pos.y, 100, 100)
   }
 
-  this.jump = function () {}
+  this.jump = function () {
+    //jumper
+    this.vel.y += this.grav // vy = vy + gravity;
+    this.pos.y += this.vel.y // y = y + vy;
+    this.pos.y = constrain(this.pos.y, 0, height - 50)
+    return this
+  }
+  this.jumprun = function(){
+    return this.jump().display()
+  }
+
+
 
   this.moveLeft = function (startPos) {
-    
-    this.imageX = startPos
-    this.imageX+=20
+    this.pos.x = startPos
+    this.pos.x += 20
   }
   this.moveRight = function (startPos) {
-    this.imageX = startPos
-    this.imageX-=20
+    this.pos.x = startPos
+    this.pos.x -= 20
   }
 }

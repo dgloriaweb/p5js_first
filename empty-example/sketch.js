@@ -15,16 +15,21 @@ function setup() {
   acceleration = createVector(0.1, 0)
   createCanvas(1000, 600)
   scooter = new Scooter(position.x, position.y, img)
-  timer = 5000
+
+  //jumper
+  pos = createVector(width >> 1, 50)
+  vel = createVector()
 }
 
 function draw() {
+  scooter.jumprun()
   background(220)
   update()
   imageMode(CENTER)
   image(this.img, position.x, position.y, 100, 100)
-  ellipse(50,height-50,20,20)
-  ellipse(width-50,height-50,20,20)
+  ellipse(50, height - 50, 20, 20)
+  ellipse(width - 50, height - 50, 20, 20)
+  ellipse(width - 50, height - 100, 20, 20)
 }
 function touchEnded() {
   isLeftPressed = false
@@ -37,8 +42,18 @@ function touchStarted(event) {
   if (event.clientX > 25 && event.clientX < 75) {
     isLeftPressed = true
   }
-  if (event.clientX > width-75 && event.clientX < width-25) {
+  if (
+    event.clientX > width - 75 &&
+    event.clientX < width - 25 &&
+    event.clientY > height - 80
+  ) {
     isRightPressed = true
+  }
+  if (event.clientY < height - 80) {
+    //jump
+
+    console.log('jump')
+    scooter.jump()
   }
 }
 
@@ -59,7 +74,7 @@ function update() {
     position.sub(velocity)
   }
   if (isRightPressed) {
-    if (position.x > width-100) {
+    if (position.x > width - 100) {
       this.isRightPressed = false
     }
     velocity.add(acceleration)
