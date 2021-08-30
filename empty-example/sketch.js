@@ -7,6 +7,7 @@ let startPos = 0
 var gemX = 400
 var gems = []
 let timer
+var velocity
 
 function preload() {
   img = loadImage(
@@ -19,11 +20,14 @@ function setup() {
   leftControl = new LeftControl(cursorX)
   rightControl = new RightControl(cursorX)
   timer = 5000
+  velocity = createVector(4);
 }
 
 function draw() {
   background(220)
-  scooter.display(imageX, imageY)
+  imageX = update(imageX)
+  imageMode(CENTER);
+  image(this.img, this.imageX, this.imageY, 100, 100);
   leftControl.display()
   rightControl.display()
 
@@ -46,20 +50,14 @@ function draw() {
 function touchEnded() {
   isLeftPressed = false
   isRightPressed = false
-  imageX = 150
-  cursorX = 50
+  console.log('ended')
 }
 function touchStarted(event) {
-  startPos = imageX
   if (event.clientX > 25 && event.clientX < 75) {
     isLeftPressed = true
-    scooter.moveLeft(startPos)
-    console.log('left')
   }
   if (event.clientX > 325 && event.clientX < 375) {
     isRightPressed = true
-    scooter.moveRight(startPos)
-    console.log('right')
   }
 }
 
@@ -69,3 +67,19 @@ function getPositionX(event) {
 // function createGem() {
 //   gems.push(new Gem(gemX, 150, 20))
 // }
+
+function update(){
+ 
+  acceleration = 1
+  acceleration ++
+
+  if (isLeftPressed) {
+    imageX-=acceleration
+    console.log('left')
+  }
+  if (isRightPressed) {
+    imageX+=acceleration
+    console.log('right')
+  }
+  return imageX
+}

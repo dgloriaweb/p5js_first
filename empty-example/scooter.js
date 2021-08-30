@@ -13,10 +13,10 @@ function Scooter(x, y, img) {
   this.moveLeft = function (startPos) {
     
     this.imageX = startPos
-    this.imageX++
+    this.imageX+=20
   }
   this.moveRight = function (startPos) {
     this.imageX = startPos
-    this.imageX--
+    this.imageX-=20
   }
 }
