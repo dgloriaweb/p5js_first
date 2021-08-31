@@ -10,7 +10,7 @@ var gravity = 0.8
 var counter
 
 function preload() {
-  img = loadImage('../scooter.png')
+  img = loadImage('scooter.png')
 }
 function setup() {
   createCanvas(600, 400)
