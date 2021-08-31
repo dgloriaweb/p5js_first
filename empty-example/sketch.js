@@ -32,9 +32,8 @@ function draw() {
   update()
   imageMode(CENTER)
   image(this.img, position.x, position.y, 100, 100)
-  ellipse(50, height - 50, 20, 20)
-  ellipse(width - 50, height - 50, 20, 20)
-  ellipse(width - 50, height - 100, 20, 20)
+  ellipse(50, height - 25, 20, 20)
+  ellipse(width - 50, height - 25, 20, 20)
 }
 function touchEnded() {
   isLeftPressed = false
@@ -46,7 +45,8 @@ function touchEnded() {
 function touchStarted(event) {
   touchX = getTouchEventX(event)
   touchY = getTouchEventY(event)
-  if (touchY < height - 75) {
+  if (touchY < height - 100) {
+    
     //jump
     jump()
   } else if (touchX > 25 && touchX < 75) {
