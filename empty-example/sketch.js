@@ -13,8 +13,8 @@ function preload() {
   img = loadImage('../scooter.png')
 }
 function setup() {
-  createCanvas(1000, 600)
-  position = createVector(500, 450)
+  createCanvas(600, 400)
+  position = createVector(width/2, height-100)
   velocity = createVector(0.5)
   acceleration = createVector(0.1, 0)
   scooter = new Scooter(position.x, position.y, img)
@@ -60,14 +60,14 @@ function touchStarted(event) {
 function updateJumper() {
   v.y += gravity
   position.y += v.y
-  position.y = constrain(position.y, 0, height - 100)
+  position.y = constrain(position.y, 0, height - 50)
 }
 function jump() {
   console.log('jump')
   v.y = -19
   //if meets floor, stop. floor is at height - 50
 
-  if (position.y >= height - 50) {
+  if (position.y >= height - 40) {
     v.y = -v.y
   }
   if (position.y <= 50) {
