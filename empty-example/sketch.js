@@ -5,25 +5,28 @@ var mass = 2
 var position
 var velocity
 var acceleration
+var v
+var gravity = 0.8
 
 function preload() {
   img = loadImage('../scooter.png')
 }
 function setup() {
+  createCanvas(1000, 600)
   position = createVector(500, 500)
   velocity = createVector(0.5)
   acceleration = createVector(0.1, 0)
-  createCanvas(1000, 600)
   scooter = new Scooter(position.x, position.y, img)
 
   //jumper
   pos = createVector(width >> 1, 50)
   vel = createVector()
+  v = createVector()
 }
 
 function draw() {
-  scooter.jumprun()
   background(220)
+  updateJumper()
   update()
   imageMode(CENTER)
   image(this.img, position.x, position.y, 100, 100)
@@ -40,17 +43,41 @@ function touchEnded() {
 }
 function touchStarted(event) {
   touchX = getTouchEventX(event)
-  if (touchX > 25 && touchX < 75) {
-    isLeftPressed = true;
-    console.log("left");
+  touchY = getTouchEventY(event)
+  if (touchY < height - 75) {
+    //jump
+    jump()
+  } else if (touchX > 25 && touchX < 75) {
+    isLeftPressed = true
+    console.log('left')
+  } else if (touchX > width - 75 && touchX < width - 25) {
+    isRightPressed = true
   }
-  if (touchX > width - 75 && touchX < width - 25) {
-    isRightPressed = true;
+}
+
+function updateJumper() {
+  v.y += gravity
+  position.y += v.y
+  position.y = constrain(position.y, 0, height - 100)
+}
+function jump() {
+  console.log('jump')
+  v.y = -10
+  //if meets floor, stop. floor is at height - 50
+  if (position.y >= height - 50) {
+    v.y = -v.y
+  }
+
+  if (position.y <= 50) {
+    v.y = -v.y
   }
 }
 
 function getTouchEventX(event) {
   return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX
+}
+function getTouchEventY(event) {
+  return event.type.includes('mouse') ? event.pageY : event.touches[0].clientY
 }
 // function createGem() {
 //   gems.push(new Gem(gemX, 150, 20))
