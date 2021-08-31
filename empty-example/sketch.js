@@ -7,13 +7,14 @@ var velocity
 var acceleration
 var v
 var gravity = 0.8
+var counter
 
 function preload() {
   img = loadImage('../scooter.png')
 }
 function setup() {
   createCanvas(1000, 600)
-  position = createVector(500, 500)
+  position = createVector(500, 450)
   velocity = createVector(0.5)
   acceleration = createVector(0.1, 0)
   scooter = new Scooter(position.x, position.y, img)
@@ -22,6 +23,7 @@ function setup() {
   pos = createVector(width >> 1, 50)
   vel = createVector()
   v = createVector()
+  counter = 3
 }
 
 function draw() {
@@ -62,12 +64,12 @@ function updateJumper() {
 }
 function jump() {
   console.log('jump')
-  v.y = -10
+  v.y = -19
   //if meets floor, stop. floor is at height - 50
+
   if (position.y >= height - 50) {
     v.y = -v.y
   }
-
   if (position.y <= 50) {
     v.y = -v.y
   }
