@@ -1,6 +1,8 @@
 class Scooter {
   constructor() {
-    this.img = loadImage('scooter.png');
+    this.img_right = loadImage('scooter.png');
+    this.img_left = loadImage('scooter_left.png');
+    this.img = this.img_left
     this.scooterPosition = createVector(width / 2, height - 100);
     this.velocity = createVector();
     this.acceleration = createVector(0.1, 0);
@@ -13,6 +15,7 @@ class Scooter {
       if (this.scooterPosition.x < 100) {
         this.isLeftPressed = false;
       }
+      this.img = this.img_left
       this.velocity.add(this.acceleration);
       this.scooterPosition.sub(this.velocity);
       console.log(this.scooterPosition);
@@ -21,12 +24,12 @@ class Scooter {
       if (this.scooterPosition.x > width - 100) {
         this.isRightPressed = false;
       }
+      this.img = this.img_right
       this.velocity.add(this.acceleration);
       this.scooterPosition.add(this.velocity);
     }
     return this;
   }
-
   updateJumper() {
     this.jumpVelocity.y += this.gravity;
     this.scooterPosition.y += this.jumpVelocity.y;
@@ -38,8 +41,10 @@ class Scooter {
     image(this.img, this.scooterPosition.x, this.scooterPosition.y, 100, 100);
     return this;
   }
-
-  run() {
+  jump() {
     return this.updateJumper().display();
+  }
+  move() {
+    return this.moveScooter().display();
   }
 }

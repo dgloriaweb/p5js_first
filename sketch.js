@@ -10,8 +10,8 @@ function setup() {
 
 function draw() {
   background(220);
-  scooter.run();
-  scooter.updateJumper();
+  scooter.jump();
+  scooter.move();
   ellipse(50, height - 25, 20, 20);
   ellipse(width - 50, height - 25, 20, 20);
 }
