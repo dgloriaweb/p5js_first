@@ -1,43 +1,23 @@
 var cursorX = 50;
 var isLeftPressed = false;
 var isRightPressed = false;
-var scooterPosition;
-var velocity;
-var acceleration;
-var v;
-var gravity = 0.8;
-var counter;
+let scooter;
 
-function preload() {
-  img = loadImage('scooter.png');
-}
 function setup() {
   createCanvas(600, 400);
-  scooterPosition = createVector(width / 2, height - 100);
-  velocity = createVector(0.5);
-  acceleration = createVector(0.1, 0);
-  scooter = new Scooter(scooterPosition.x, scooterPosition.y, img);
-
-  //jumper
-  pos = createVector(width >> 1, 50);
-  v = createVector();
-  counter = 3;
+  scooter = new Scooter();
 }
 
 function draw() {
   background(220);
+  scooter.run();
   scooter.updateJumper();
-  scooter.moveScooter();
-  imageMode(CENTER);
-  image(this.img, scooterPosition.x, scooterPosition.y, 100, 100);
   ellipse(50, height - 25, 20, 20);
   ellipse(width - 50, height - 25, 20, 20);
 }
 function touchEnded() {
   isLeftPressed = false;
   isRightPressed = false;
-  velocity = createVector(0.5);
-  acceleration = createVector(0.3, 0);
   console.log('ended');
 }
 function touchStarted(event) {
@@ -45,7 +25,8 @@ function touchStarted(event) {
   touchY = getTouchEventY(event);
   if (touchY < height - 100) {
     //jump
-    scooter.jump();
+    // scooter.jump();
+    scooter.jumpVelocity.y = -3;
   } else if (touchX > 25 && touchX < 75) {
     img = loadImage('scooter_left.png');
     isLeftPressed = true;

@@ -1,60 +1,45 @@
-function Scooter(x, y, img) {
-  this.pos = createVector(x, y)
-  this.vel = createVector()
-  this.grav = 0.1
-  this.v = createVector()
-
-  this.img = img
-
-  this.display = function () {
-    imageMode(CENTER)
-    image(this.img, this.pos.x, this.pos.y, 100, 100)
+class Scooter {
+  constructor() {
+    this.img = loadImage('scooter.png');
+    this.scooterPosition = createVector(width / 2, height - 100);
+    this.velocity = createVector();
+    this.acceleration = createVector(0.1, 0);
+    this.gravity = 0.1;
+    this.jumpVelocity = createVector();
   }
-
-  this.moveLeft = function (startPos) {
-    this.pos.x = startPos
-    this.pos.x += 20
-  }
-  this.moveRight = function (startPos) {
-    this.pos.x = startPos
-    this.pos.x -= 20
-  }
-  
-this.moveScooter= function() {
-  if (isLeftPressed) {
-    //if reached edge, stop
-    if (scooterPosition.x < 100) {
-      this.isLeftPressed = false
+  moveScooter() {
+    if (isLeftPressed) {
+      //if reached edge, stop
+      if (this.scooterPosition.x < 100) {
+        this.isLeftPressed = false;
+      }
+      this.velocity.add(this.acceleration);
+      this.scooterPosition.sub(this.velocity);
+      console.log(this.scooterPosition);
     }
-    velocity.add(acceleration)
-    scooterPosition.sub(velocity)
-  }
-  if (isRightPressed) {
-    if (scooterPosition.x > width - 100) {
-      this.isRightPressed = false
+    if (isRightPressed) {
+      if (this.scooterPosition.x > width - 100) {
+        this.isRightPressed = false;
+      }
+      this.velocity.add(this.acceleration);
+      this.scooterPosition.add(this.velocity);
     }
-    velocity.add(acceleration)
-    scooterPosition.add(velocity)
+    return this;
   }
-}
 
-this.updateJumper = function() {
-  v.y += gravity
-  scooterPosition.y += v.y
-  scooterPosition.y = constrain(scooterPosition.y, 0, height - 50)
-}
-this.jump = 
-function jump() {
-  console.log('jump');
-  v.y = -19;
-  //if meets floor, stop. floor is at height - 50
-
-  if (scooterPosition.y >= height - 40) {
-    v.y = -v.y;
+  updateJumper() {
+    this.jumpVelocity.y += this.gravity;
+    this.scooterPosition.y += this.jumpVelocity.y;
+    this.scooterPosition.y = constrain(this.scooterPosition.y, 0, height - 50);
+    return this;
   }
-  if (scooterPosition.y <= 50) {
-    v.y = -v.y;
+  display() {
+    imageMode(CENTER);
+    image(this.img, this.scooterPosition.x, this.scooterPosition.y, 100, 100);
+    return this;
   }
-}
 
+  run() {
+    return this.updateJumper().display();
+  }
 }
